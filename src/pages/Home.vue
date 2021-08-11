@@ -1,15 +1,15 @@
 <template>
   <div id="app container">
     <div>
-      Wheather App
+      Appli Météo
     </div>
 
     <template class="form">
-        <b-form-input type="text" v-model="queryCity" placeholder="Enter your name" class="input"></b-form-input>
+        <b-form-input type="text" v-model="queryCity" placeholder="Entrer une ville" class="input"></b-form-input>
         <b-button v-on:click="getCity" class="button" >Recherche</b-button>
         <b-button v-on:click="getCoord" class="button">Localisation</b-button>
     </template>
-   
+
     <section class="app">
       <div>
         <Forecast v-bind:city=this.city class="WeatherApp" :class="period"></Forecast>
@@ -32,9 +32,9 @@
       </div>
     </section>
 
-    <template class="app">
+    <section class="app">
       <Forecast v-for="city in cityHistory" v-bind:city="city" v-bind:key="city" class="WeatherApp"  :class="period"></Forecast>
-    </template>
+    </section>
 
     <section>
       <AppCredits :year="year"></AppCredits>
@@ -56,8 +56,9 @@ export default {
   data () {
     return {
       date: new Date(),
-      queryCity: "",
-      city: "caen",
+      queryCity: '',
+      city: '',
+      ValidCity: null,
       cityHistory: []
     }
   },
@@ -70,7 +71,7 @@ export default {
       let hour = this.date.getHours()
 
       return (hour > 5 && hour < 18) ? 'app--day' : 'app--night'
-    },
+    }
   },
   methods: {
     getCity () {
@@ -78,8 +79,8 @@ export default {
       this.city = this.queryCity
     },
     getCoord () {
-
-      this.city = ""
+      this.city = null
+      console.log(this.city)
     },
     addFavoite () {
       this.cityHistory.push(this.city)

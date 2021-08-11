@@ -28,7 +28,9 @@ import WeatherForecast from '@/services/WeatherForecast'
 
 export default {
     name: 'WeatherApp',
-    props: ["city"],
+    props: {
+        city: String,
+    },
     components: {
         Weather,
         Temperature,
