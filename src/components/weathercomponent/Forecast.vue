@@ -30,6 +30,7 @@ export default {
     name: 'WeatherApp',
     props: {
         city: String,
+        geo: Boolean
     },
     components: {
         Weather,
@@ -38,13 +39,23 @@ export default {
     },
     data() {
         return {
-            forecast: new WeatherForecast(this.city)
+            forecast: new WeatherForecast(this.city, this.geo)
+        }
+    },
+    methods: {
+        sendQueuesListSelected () {
+            this.$emit('sendCity')
+            this.$emit('sendCoord')
         }
     },
     watch: { 
       	city: function(newVal, oldVal) { // watch it
           console.log('Prop changed: ', newVal, ' | was: ', oldVal)
-          this.forecast = new WeatherForecast(newVal)
+          this.forecast = new WeatherForecast(newVal, this.geo)
+        },
+        geo: function(newVal, oldVal) { // watch it
+          console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+          this.forecast = new WeatherForecast(this.city, newVal)
         }
     }
     

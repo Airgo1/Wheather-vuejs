@@ -7,7 +7,8 @@ class WeatherForecast {
     /*
     * Create WeatherForecast instance.
     */
-    constructor(city) {
+    constructor(city, geo) {
+        this.geo = geo
         this.city = city
         this.cloudiness = 0
         this.windSpeed = 0
@@ -21,15 +22,15 @@ class WeatherForecast {
         this.description = 'Invalide';
         this.weatherIcon = require('@/assets/icons/weather/cloud.svg');
 
-        this.update(this.city);
+        this.update();
     }
 
     /*
     * Update forecast with fresh data from current location or city.
     */
-    update(city) {
-        if (city != null) {
-            this.updateForecastCity(city)
+    update() {
+        if (this.geo == false ) {
+            this.updateForecastCity(this.city)
         }
         else if (navigator.onLine) {
             navigator.geolocation.getCurrentPosition(position => this.updateForecastCoord(position));
