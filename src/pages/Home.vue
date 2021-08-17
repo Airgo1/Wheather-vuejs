@@ -12,10 +12,14 @@
    
     <section class="app">
       <div>
-        <Forecast v-bind:city=this.city class="WeatherApp" :class="period"></Forecast>
+        <Forecast v-bind:city="this.city" v-bind:geo="this.geo" class="WeatherApp" :class="period"></Forecast>
+        <b-button  v-on:click="addFavoite" class="button">Ajouter au favoris</b-button>
       </div>
-      <div>
-        <b-card
+      <!-- <div>
+        <div v-if='coord == null || cityFind == null' class="p-4">
+          <b-icon icon="clock" animation="spin" font-scale="4" shift-v="8" class="wait"></b-icon>
+        </div>
+        <b-card v-else
           title="Carte postale"
           img-src="https://picsum.photos/600/300/?image=25"
           img-alt="Image"
@@ -29,12 +33,12 @@
 
           <b-button  v-on:click="addFavoite" class="button">Ajouter au favoris</b-button>
         </b-card>
-      </div>
+      </div> -->
     </section>
 
-    <template class="app">
-      <Forecast v-for="city in cityHistory" v-bind:city="city" v-bind:key="city" class="WeatherApp"  :class="period"></Forecast>
-    </template>
+    <section class="app">
+      <Forecast v-for="histoOne in cityHistory" v-bind:city="histoOne.city" v-bind:geo="histoOne.geo" v-bind:key="histoOne.city" class="WeatherApp"  :class="period" ></Forecast>
+    </section>
 
     <section>
       <AppCredits :year="year"></AppCredits>
@@ -57,8 +61,11 @@ export default {
     return {
       date: new Date(),
       queryCity: "",
+      geo: true,
       city: "caen",
-      cityHistory: []
+      cityHistory: [],
+      coord: null,
+      cityFind: null
     }
   },
 
@@ -75,14 +82,22 @@ export default {
   methods: {
     getCity () {
       console.log(this.queryCity)
-      this.city = this.queryCity
+      if(this.queryCity != "") {
+        this.geo = false
+        this.city = this.queryCity
+      } 
     },
     getCoord () {
-
+      this.geo = true
       this.city = ""
     },
     addFavoite () {
-      this.cityHistory.push(this.city)
+      this.cityHistory.push(
+        { 
+          city: this.city,
+          geo: this.geo
+        }
+      )
     }
   }
 }
@@ -154,5 +169,8 @@ a {
 
 .button {
   margin: 10px;
+}
+.wait {
+  margin-left: 50px;
 }
 </style>
