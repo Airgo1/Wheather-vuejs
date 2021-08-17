@@ -19,7 +19,7 @@ class WeatherForecast {
         this.temperatureLow = 0
 
         this.location = ' '
-        this.description = 'Connectez vous à internet';
+        this.description = 'Invalide';
         this.weatherIcon = require('@/assets/icons/weather/cloud.svg');
 
         this.update();

@@ -1,15 +1,15 @@
 <template>
   <div id="app container">
     <div>
-      Wheather App
+      Appli Météo
     </div>
 
     <template class="form">
-        <b-form-input type="text" v-model="queryCity" placeholder="Enter your name" class="input"></b-form-input>
+        <b-form-input type="text" v-model="queryCity" placeholder="Entrer une ville" class="input"></b-form-input>
         <b-button v-on:click="getCity" class="button" >Recherche</b-button>
         <b-button v-on:click="getCoord" class="button">Localisation</b-button>
     </template>
-   
+
     <section class="app">
       <div>
         <Forecast v-bind:city="this.city" v-bind:geo="this.geo" class="WeatherApp" :class="period"></Forecast>
@@ -37,6 +37,7 @@
     </section>
 
     <section class="app">
+
       <Forecast v-for="histoOne in cityHistory" v-bind:city="histoOne.city" v-bind:geo="histoOne.geo" v-bind:key="histoOne.city" class="WeatherApp"  :class="period" ></Forecast>
     </section>
 
@@ -77,7 +78,7 @@ export default {
       let hour = this.date.getHours()
 
       return (hour > 5 && hour < 18) ? 'app--day' : 'app--night'
-    },
+    }
   },
   methods: {
     getCity () {
